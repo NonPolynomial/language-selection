@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Testing</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script>
+            createLanguageSelection('de', [
+                {
+                    id: 'EN',
+                    title: 'English',
+                    name: 'English',
+                    url:'/en'
+                },
+                {
+                    id: 'DE',
+                    title: 'Deutsch',
+                    name: 'Deutsch',
+                    url:'/de'
+                }
+            ], document.querySelector('#app'), {
+                simulate: true
+            });
+        </script>
+    </body>
+</html>

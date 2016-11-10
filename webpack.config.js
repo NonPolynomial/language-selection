@@ -10,7 +10,7 @@ module.exports = {
     output: {
         path: path.resolve('lib'),
         filename: 'language_selection.js',
-        publicPath: '/',
+        publicPath: './',
         library: 'createLanguageSelection',
         libraryTarget: 'umd',
         umdNamedDefine: true
