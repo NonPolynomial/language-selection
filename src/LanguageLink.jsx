@@ -1,7 +1,7 @@
 'use strict';
 import {closePopup} from './store.js';
 
-let preventClickEvent = (e) => {
+const preventClickEvent = (e) => {
     e.preventDefault();
     return false;
 };

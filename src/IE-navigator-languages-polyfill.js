@@ -1,6 +1,6 @@
 'use strict';
-var getLangFromLocaleString = function(localeStr) {
-    var lang = /^(.{2})\-.{2}$/g.exec(localeStr);
+const getLangFromLocaleString = (localeStr) => {
+    const lang = /^(.{2})\-.{2}$/g.exec(localeStr);
     if (lang) {
         return lang[1];
     }
@@ -9,8 +9,8 @@ var getLangFromLocaleString = function(localeStr) {
 
 if (!navigator.languages) {
     navigator.languages = (function() {
-        var langs = [];
-        var lang;
+        let langs = [];
+        let lang;
         if (navigator.language) {
             langs.push(navigator.language);
             lang = getLangFromLocaleString(navigator.language);
