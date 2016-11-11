@@ -55,6 +55,14 @@ let opts = {
     inputSpanClasses: '',
     // classes for selection list
     langSelectionClasses: 'lang-selection',
+    // show input for filter languages
+    showInput: true,
+    // filter highlighted languages
+    filterNavigatorLanguages: false,
+    // hightlight navigator languages, when found in given language array
+    highlightNavigatorLanguages: true
+    // show language links, even when its already highlighted as a navigator language 
+    enableDuplicates: true,
     // if set to true, click events are prevented
     simulate: false
 }

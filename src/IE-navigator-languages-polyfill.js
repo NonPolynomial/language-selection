@@ -1,4 +1,3 @@
-'use strict';
 const getLangFromLocaleString = (localeStr) => {
     const lang = /^(.{2})\-.{2}$/g.exec(localeStr);
     if (lang) {

@@ -1,6 +1,6 @@
-'use strict';
-import LanguageLink from './LanguageLink.jsx';
-import {create} from 'react/lib/ReactFragment';
+import LanguageLink, {mapFilteredLangs} from './LanguageLink.jsx';
+import createInput from './FilterInput.jsx';
+import {compose, map, filter} from './utils.js';
 import {selectLang, openPopup, closePopup, filterLangs} from './store.js';
 
 const INITIAL_OPTS = {
@@ -14,7 +14,8 @@ const INITIAL_OPTS = {
     popupCloseDelay: 250,
     showInput: true,
     enableDuplicates: true,
-    filterNavigatorLanguages: false
+    filterNavigatorLanguages: false,
+    highlightNavigatorLanguages: true
 };
 
 const createCloser = (dispatcher, except) => {
@@ -28,16 +29,6 @@ const createCloser = (dispatcher, except) => {
         }
     };
     return closer;
-};
-
-const createInput = ({props, opts} = {}) => {
-    if(!opts.showInput) {
-        return [];
-    }
-    return create({
-        input: <input className={(Array.isArray(opts.inputClasses)) ? opts.inputClasses.join(' ') : opts.inputClasses} type="text" onKeyUp={(e) => props.dispatch(filterLangs(e.target.value))} />,
-        inputSpan: <span className={(Array.isArray(opts.inputSpanClasses)) ? opts.inputSpanClasses.join(' ') : opts.inputSpanClasses}></span>
-    });
 };
 
 const LanguageSwitcher = (props) => {
@@ -65,6 +56,26 @@ const LanguageSwitcher = (props) => {
 
     const input = createInput({props,opts});
 
+    const getHightlightedLangs = compose(
+        filter((lang) => opts.highlightNavigatorLanguages),
+        filter((lang) => !!~navigator.languages.indexOf(lang.id.toLowerCase())),
+        filter((lang) => !opts.filterNavigatorLanguages || new RegExp('^'+props.langFilter,'i').test(lang.id) || new RegExp('^'+props.langFilter,'i').test(lang.title) || new RegExp('^'+props.langFilter,'i').test(lang.name)),
+        mapFilteredLangs({
+            style: {
+                fontWeight: 'bold'
+            },
+            clickHandler: linkClick
+        })
+    );
+
+    const getLangs = compose(
+        filter((lang) => opts.enableDuplicates || !opts.highlightNavigatorLanguages || !~navigator.languages.indexOf(lang.id.toLowerCase())),
+        filter((lang) => new RegExp('^'+props.langFilter,'i').test(lang.id) || new RegExp('^'+props.langFilter,'i').test(lang.title) || new RegExp('^'+props.langFilter,'i').test(lang.name)),
+        mapFilteredLangs({
+            clickHandler: linkClick
+        })
+    );
+
     return (<div className={(Array.isArray(opts.classes)) ? opts.classes.join(' ') : opts.classes} onClick={clicker} onMouseEnter={mouseEnterer} onMouseLeave={mouseLeaver}>
         <div className={(Array.isArray(opts.selectedLangClasses)) ? opts.selectedLangClasses.join(' ') : opts.selectedLangClasses}>
             <LanguageLink lang={props.langs.reduce((carry, lang) => {
@@ -79,24 +90,8 @@ const LanguageSwitcher = (props) => {
             }}>
             {input}
             <ul className={(Array.isArray(opts.langSelectionClasses)) ? opts.langSelectionClasses.join(' ') : opts.langSelectionClasses}>
-                {
-                    props.langs
-                    .filter((lang) => !!~navigator.languages.indexOf(lang.id.toLowerCase()))
-                    .filter((lang) => !opts.filterNavigatorLanguages || new RegExp('^'+props.langFilter,'i').test(lang.id) || new RegExp('^'+props.langFilter,'i').test(lang.title) || new RegExp('^'+props.langFilter,'i').test(lang.name))
-                    .map((lang, index) => (<li style={{
-                        fontWeight: 'bold'
-                    }} key={index}>
-                        <LanguageLink onClick={linkClick} lang={lang} />
-                    </li>))
-                }
-                {
-                    props.langs
-                    .filter((lang) => opts.enableDuplicates || !~navigator.languages.indexOf(lang.id.toLowerCase()))
-                    .filter((lang) => new RegExp('^'+props.langFilter,'i').test(lang.id) || new RegExp('^'+props.langFilter,'i').test(lang.title) || new RegExp('^'+props.langFilter,'i').test(lang.name))
-                    .map((lang, index) => (<li key={index}>
-                        <LanguageLink onClick={linkClick} lang={lang} />
-                    </li>))
-                }
+                {getHightlightedLangs(props.langs)}
+                {getLangs(props.langs)}
             </ul>
         </div>
     </div>);

@@ -1,4 +1,3 @@
-'use strict';
 import './IE-navigator-languages-polyfill.js';
 
 const {render} = ReactDOM;

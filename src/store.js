@@ -1,4 +1,3 @@
-'use strict';
 const INITIAL = {
     langs: [],
     opened: false,
