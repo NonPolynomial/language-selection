@@ -7,7 +7,7 @@ let config = require('./config.js');
 let libName = 'createLanguageSelection';
 
 module.exports = [{
-    entry: path.resolve('src', 'main.js'),
+    entry: path.resolve('src', 'main.jsx'),
     output: {
         path: path.resolve('lib'),
         filename: 'language_selection.min.js',
@@ -28,7 +28,7 @@ module.exports = [{
         ]
     }
 }, {
-    entry: path.resolve('src', 'main.js'),
+    entry: path.resolve('src', 'main.jsx'),
     output: {
         path: path.resolve('lib'),
         filename: 'language_selection.js',
@@ -49,7 +49,7 @@ module.exports = [{
         ]
     }
 }, {
-    entry: path.resolve('src', 'main.js'),
+    entry: path.resolve('src', 'main.jsx'),
     output: {
         path: path.resolve('lib'),
         filename: 'language_selection-lib-only.min.js',
@@ -69,7 +69,7 @@ module.exports = [{
         ]
     }
 }, {
-    entry: ['babel-polyfill', path.resolve('src', 'main.js')],
+    entry: ['babel-polyfill', path.resolve('src', 'main.jsx')],
     output: {
         path: path.resolve('lib'),
         filename: 'language_selection-with-polyfills.min.js',

@@ -5,8 +5,8 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let config = require('./config.js');
 
 module.exports = {
-    devtool: '#cheap-module-inline-source-map',
-    entry: ['babel-polyfill', path.resolve('src', 'main.js')],
+    devtool: '#module-inline-source-map',
+    entry: ['babel-polyfill', path.resolve('src', 'main.jsx')],
     output: {
         path: path.resolve('lib'),
         filename: 'language_selection.js',
