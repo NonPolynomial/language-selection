@@ -53,6 +53,9 @@ let opts = {
     // added a span for e.g. search icons
     // classes for this span
     inputSpanClasses: '',
+    // automatically close language selection on mouseleave after given number of milliseconds
+    // -1 means disabled
+    popupCloseDelay: -1,
     // classes for selection list
     langSelectionClasses: 'lang-selection',
     // show input for filter languages
