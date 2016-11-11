@@ -11,7 +11,7 @@ const INITIAL_OPTS = {
     inputSpanClasses: '',
     langSelectionClasses: 'lang-selection',
     simulate: false,
-    popupCloseDelay: 250,
+    popupCloseDelay: -1,
     showInput: true,
     enableDuplicates: true,
     filterNavigatorLanguages: false,
@@ -34,17 +34,28 @@ const createCloser = (dispatcher, except) => {
 const LanguageSwitcher = (props) => {
     const opts = Object.assign({}, INITIAL_OPTS, props.opts);
     let closer = null;
+    let to = null;
 
     const clicker = () => props.dispatch(openPopup());
 
     const mouseEnterer = () => {
         document.removeEventListener('click',closer);
         closer = null;
+        if(to) {
+            clearTimeout(to);
+            to = null;
+        }
     };
 
     const mouseLeaver = (e) => {
         closer = createCloser(props.dispatch, e.target);
         document.addEventListener('click', closer);
+        if(!!~opts.popupCloseDelay) {
+            to = setTimeout(() => {
+                props.dispatch(closePopup());
+                document.removeEventListener('click',closer);
+            }, opts.popupCloseDelay);
+        }
     };
 
     const linkClick = (e) => {
