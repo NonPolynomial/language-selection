@@ -7,36 +7,9 @@ Library for creating language selections
 
 ## Usage
 
-### HTML
-
-e.g. 
-```html
-<div id="app"></div>
-```
-
-### JavaScript
-
-e.g.
 ```js
-createLanguageSelection('de', [
-    {
-        id: 'EN',
-        title: 'English',
-        name: 'English',
-        url:'/en'
-    },
-    {
-        id: 'DE',
-        title: 'Deutsch',
-        name: 'Deutsch',
-        url:'/de'
-    },
-], document.querySelector('#app'), opts);
-```
+import LanguageSwitch from '@nonpolynomial/language-switch/lib/es'
 
-### Options
-
-```js
 /**
  * default options
  * @type {Object}
@@ -64,31 +37,14 @@ let opts = {
     filterNavigatorLanguages: false,
     // hightlight navigator languages, when found in given language array
     highlightNavigatorLanguages: true
-    // show language links, even when its already highlighted as a navigator language 
+    // show language links, even when its already highlighted as a navigator language
     enableDuplicates: true,
     // if set to true, click events are prevented
     simulate: false
-}
+};
+
+<LanguageSwitch lang="de" langs={[{id: 'en', name: 'English', title: 'English', url: '#/en' }]} options={opts} />
 ```
-
-## Dependencies
-<a id="dependencies"></a>
-
-* react
-* react-addons-create-fragment
-* react-dom
-* redux
-* react-redux
-
-## Build
-
-`npm run build` creates 4 files
-
-* `language_selection.js` - standalone lib with all dependencies
-* `language_selection.min.js` - minified version of `language_selection.js`
-* `language_selection-lib-only.js` - lib without dependencies (minified)
-                                     you have to include the [dependencies](#dependencies) by yourself
-* `language_selection-with-polyfills.min.js` - like `language_selection.min.js`, just with [Babel Polyfill][babel-polyfill]
 
 ## License
 
